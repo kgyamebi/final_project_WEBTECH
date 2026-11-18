@@ -1,0 +1,100 @@
+<?php
+declare(strict_types=1);
+
+use App\Controllers\AccountController;
+use App\Controllers\AdminController;
+use App\Controllers\ApiController;
+use App\Controllers\AuthController;
+use App\Controllers\ReportController;
+use App\Controllers\SiteController;
+use App\Router;
+
+$router = new Router();
+$router->get('/', [SiteController::class, 'home']);
+$router->get('/explore', [SiteController::class, 'explore']);
+$router->get('/journey', [SiteController::class, 'journey']);
+$router->get('/routes/{id}', [SiteController::class, 'route']);
+$router->get('/stops/{id}', [SiteController::class, 'stop']);
+$router->get('/privacy', [SiteController::class, 'privacy']);
+
+$router->get('/login', [AuthController::class, 'form']);
+$router->post('/login', [AuthController::class, 'login']);
+$router->post('/logout', [AuthController::class, 'logout']);
+$router->get('/register', [AuthController::class, 'registerForm']);
+$router->post('/register', [AuthController::class, 'register']);
+
+$router->get('/report', [ReportController::class, 'form']);
+$router->post('/report', [ReportController::class, 'submit']);
+$router->get('/incidents/{id}', [ReportController::class, 'show']);
+$router->post('/incidents/{id}/flag', [ReportController::class, 'flag']);
+$router->get('/media/{id}', [ReportController::class, 'media']);
+$router->get('/my/reports', [ReportController::class, 'mine']);
+$router->get('/my/reports/{id}', [ReportController::class, 'mineOne']);
+$router->post('/my/reports/{id}/clarification', [ReportController::class, 'clarify']);
+$router->post('/my/reports/{id}/correction', [ReportController::class, 'correction']);
+
+$router->get('/profile', [AccountController::class, 'profile']);
+$router->post('/profile', [AccountController::class, 'update']);
+$router->post('/profile/password', [AccountController::class, 'password']);
+$router->post('/saved-routes', [AccountController::class, 'saveRoute']);
+$router->post('/saved-routes/{id}/delete', [AccountController::class, 'unsaveRoute']);
+$router->post('/saved-stops', [AccountController::class, 'saveStop']);
+$router->post('/saved-stops/{id}/delete', [AccountController::class, 'unsaveStop']);
+$router->get('/notifications', [AccountController::class, 'notifications']);
+$router->post('/notifications/{id}/read', [AccountController::class, 'read']);
+$router->post('/notifications/read-all', [AccountController::class, 'readAll']);
+
+$router->get('/admin', [AdminController::class, 'dashboard']);
+$router->get('/admin/reports', [AdminController::class, 'reports']);
+$router->get('/admin/reports/{id}', [AdminController::class, 'review']);
+$router->post('/admin/reports/{id}/status', [AdminController::class, 'status']);
+$router->post('/admin/reports/{id}/note', [AdminController::class, 'note']);
+$router->post('/admin/disruption/recalculate', [AdminController::class, 'recalculate']);
+$router->get('/admin/routes', [AdminController::class, 'routes']);
+$router->get('/admin/routes/new', [AdminController::class, 'routeForm']);
+$router->post('/admin/routes', [AdminController::class, 'routeCreate']);
+$router->get('/admin/routes/{id}/edit', [AdminController::class, 'routeForm']);
+$router->post('/admin/routes/{id}', [AdminController::class, 'routeUpdate']);
+$router->post('/admin/routes/{id}/active', [AdminController::class, 'routeActive']);
+$router->post('/admin/routes/{id}/check', [AdminController::class, 'routeCheck']);
+$router->get('/admin/stops', [AdminController::class, 'stops']);
+$router->get('/admin/stops/new', [AdminController::class, 'stopForm']);
+$router->post('/admin/stops', [AdminController::class, 'stopCreate']);
+$router->get('/admin/stops/{id}/edit', [AdminController::class, 'stopForm']);
+$router->post('/admin/stops/{id}', [AdminController::class, 'stopUpdate']);
+$router->post('/admin/stops/{id}/active', [AdminController::class, 'stopActive']);
+$router->post('/admin/stops/{id}/check', [AdminController::class, 'stopCheck']);
+$router->get('/admin/users', [AdminController::class, 'users']);
+$router->post('/admin/users/{id}', [AdminController::class, 'userUpdate']);
+$router->get('/admin/categories', [AdminController::class, 'categories']);
+$router->post('/admin/categories/{id}', [AdminController::class, 'categoryUpdate']);
+$router->get('/admin/analytics', [AdminController::class, 'analytics']);
+$router->get('/admin/audit', [AdminController::class, 'audit']);
+$router->get('/admin/settings', [AdminController::class, 'settings']);
+$router->post('/admin/settings', [AdminController::class, 'settingsSave']);
+
+$router->get('/api/health', [ApiController::class, 'health']);
+$router->get('/api/map', [ApiController::class, 'map']);
+$router->get('/api/places', [ApiController::class, 'places']);
+$router->get('/api/routes', [ApiController::class, 'routes']);
+$router->get('/api/routes/{id}', [ApiController::class, 'route']);
+$router->get('/api/stops', [ApiController::class, 'stops']);
+$router->get('/api/journeys', [ApiController::class, 'journeys']);
+$router->get('/api/incidents', [ApiController::class, 'incidents']);
+$router->get('/api/incidents/{id}', [ApiController::class, 'incident']);
+$router->post('/api/reports', [ApiController::class, 'createReport']);
+$router->get('/api/me', [ApiController::class, 'me']);
+$router->get('/api/me/reports', [ApiController::class, 'myReports']);
+$router->get('/api/me/reports/{id}', [ApiController::class, 'myReport']);
+$router->patch('/api/reports/{id}', [ApiController::class, 'updateReport']);
+$router->get('/api/notifications', [ApiController::class, 'notifications']);
+$router->patch('/api/notifications/{id}/read', [AccountController::class, 'read']);
+$router->get('/api/admin/reports', [ApiController::class, 'adminReports']);
+$router->patch('/api/admin/reports/{id}/status', [ApiController::class, 'adminStatus']);
+$router->get('/api/admin/analytics', [ApiController::class, 'adminAnalytics']);
+$router->post('/api/admin/routes', [ApiController::class, 'adminCreateRoute']);
+$router->post('/api/admin/routes/{id}', [ApiController::class, 'adminUpdateRoute']);
+$router->post('/api/admin/stops', [ApiController::class, 'adminCreateStop']);
+$router->post('/api/admin/stops/{id}', [ApiController::class, 'adminUpdateStop']);
+
+$router->dispatch($_SERVER['REQUEST_METHOD'] ?? 'GET', $_SERVER['REQUEST_URI'] ?? '/');

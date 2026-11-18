@@ -1,0 +1,7 @@
+<h1>Privacy, corrections, and retention</h1>
+<p>InsideAccra asks for a location so a report can be placed on the map. The browser asks permission before using device location. You can refuse and drop a pin or type coordinates instead. Do not submit a home address unless it is essential to describe a public road or stop.</p>
+<p>Your name, email, and phone number are not shown on public reports. Moderators can see the account that submitted a report so they can ask for clarification. Internal moderation notes stay off the public map and the public incident API.</p>
+<p>Images are limited to JPEG, PNG, and WebP, checked on the server, and stored outside the public folder. They are shown with the report when the report itself is public.</p>
+<p>Report and route times are stored in UTC and shown in Africa/Accra time. Demo seed data is labelled and can be replaced. Community reports are kept while the record is useful for the map. A moderator can mark a report resolved, rejected, or duplicate.</p>
+<p>To correct a route, stop, or report, use the report correction form or contact the project administrator running this installation. This demo does not send email. This is not an official government channel and not an emergency dispatch service. For danger in progress, contact local emergency services.</p>
+<p>Map tiles are requested from OpenStreetMap. Their privacy and usage policy applies to that request.</p>
